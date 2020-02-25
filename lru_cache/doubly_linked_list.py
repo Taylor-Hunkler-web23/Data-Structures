@@ -49,25 +49,71 @@ class DoublyLinkedList:
         return self.length
 
     def add_to_head(self, value):
-        pass
+        self.length += 1
+        if not self.head and not self.tail:
+            # Empty list, this is head and tail
+            self.head = self.tail = ListNode(value)
+        else:
+            # We know that the list is populated
+            self.head.insert_before(value)
+            self.head = self.head.prev
 
     def remove_from_head(self):
-        pass
+        value = self.head.value
+        self.delete(self.head)
+        return value
 
     def add_to_tail(self, value):
-        pass
+        self.length += 1
+        if not self.head and not self.tail:
+            self.head = self.tail = ListNode(value)
+        else:
+            self.tail.insert_after(value)
+            self.tail = self.tail.next
 
     def remove_from_tail(self):
-        pass
+        value = self.tail.value
+        self.delete(self.tail)
+        return value
 
     def move_to_front(self, node):
-        pass
+        self.delete(node)
+        self.add_to_head(node.value)
 
     def move_to_end(self, node):
-        pass
+        self.delete(node)
+        self.add_to_tail(node.value)
 
     def delete(self, node):
-        pass
+        if not self.head and not self.tail:
+            print("Error")
+            return
+              # if node is both
+        elif self.head == self.tail:
+            self.head = None
+            self.tail = None
+#if node is head
+        elif node == self.head:
+            self.head = self.head.next
+            node.delete()
+            #if node is tail
+        elif node == self.tail:
+            self.tail = self.tail.prev
+            node.delete()
+          
+        #If node is middle
+        else:
+            node.delete()
+
+        self.length -=1
 
     def get_max(self):
-        pass
+        if self.head is None:
+            return None
+        max_value = self.head.value
+        current = self.head
+        while current:
+            if current.value > max_value:
+                max_value = current.value
+            current = current.next
+        return max_value

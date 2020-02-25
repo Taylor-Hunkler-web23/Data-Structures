@@ -1,3 +1,5 @@
+from doubly_linked_list import DoublyLinkedList
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +9,18 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        #max number of nodes it can hold
+        self.limit = limit
+
+        #current number of nodes it is holding
+        self.holding = 0
+
+        #a doubly-linked list that holds the key-value entries in the correct order
+        self.dll = DoublyLinkedList()
+
+        #a storage dict that provides fast access to every node stored in the cache
+        self.cache = dict()
+        
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +30,18 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        #if it exists in cache
+        if key in self.cache:
+            #move the key-value pair to the end of the order such that the pair is considered most-recently used
+            self.dll.move_to_end(self.cache[key])
+            #Returns the value associated with the key
+            return self.cache[key].value
+            #None if the key-value pair doesn't exist in the cache.
+        else:
+            return None
+
+
+        
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -30,4 +54,37 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        
+        #if key already exists in cache
+        if key in self.cache:
+            # self.cache[key]
+        #Adds the given key-value pair to the cache
+            self.cache[key].value = (key, value)
+        #The newly-added pair should be considered the most-recently used entry in the cache
+            self.dll.move_to_end(self.cache[key])
+            return
+
+        #If the cache is already at max capacity  
+        if self.holding == self.limit:
+        #then the oldest entry in the cache needs to be removed to make room. first item in tuple
+            del self.cache[self.dll.head.value]
+        #remove from head
+            self.dll.remove_from_head()
+        #decrease holding
+            self.holding -=1
+
+        
+        # key doesn't already exist, add it
+        self.dll.add_to_tail((key,value))
+        #add to dict
+        self.cache[key] = self.dll.tail
+        #increase holding
+        self.holding +=1
+
+
+
+        
+
+
+        
+        
