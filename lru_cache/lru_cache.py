@@ -35,7 +35,7 @@ class LRUCache:
             #move the key-value pair to the end of the order such that the pair is considered most-recently used
             self.dll.move_to_end(self.cache[key])
             #Returns the value associated with the key
-            return self.cache[key].value
+            return self.cache[key].value[1]
             #None if the key-value pair doesn't exist in the cache.
         else:
             return None
@@ -67,7 +67,7 @@ class LRUCache:
         #If the cache is already at max capacity  
         if self.holding == self.limit:
         #then the oldest entry in the cache needs to be removed to make room. first item in tuple
-            del self.cache[self.dll.head.value]
+            del self.cache[self.dll.head.value[0]]
         #remove from head
             self.dll.remove_from_head()
         #decrease holding
