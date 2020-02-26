@@ -30,12 +30,19 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        #if it exists in cache
+        #if key exists in cache
         if key in self.cache:
+            
+            #saving key to variable
+            node = self.cache[key]
+
             #move the key-value pair to the end of the order such that the pair is considered most-recently used
-            self.dll.move_to_end(self.cache[key])
+            # self.dll.move_to_end(self.cache[key])
+            self.dll.move_to_end(node)
+
             #Returns the value associated with the key
-            return self.cache[key].value[1]
+            return node.value[1]
+
             #None if the key-value pair doesn't exist in the cache.
         else:
             return None
@@ -54,30 +61,37 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        
+        #if cache is not empty
         #if key already exists in cache
-        if key in self.cache:
-            # self.cache[key]
-        #Adds the given key-value pair to the cache
+        if key in self.cache:           
+
+        #Overwrite the value, Adds the given key-value pair to the cache
             self.cache[key].value = (key, value)
+
         #The newly-added pair should be considered the most-recently used entry in the cache
             self.dll.move_to_end(self.cache[key])
             return
 
+
         #If the cache is already at max capacity  
         if self.holding == self.limit:
+
         #then the oldest entry in the cache needs to be removed to make room. first item in tuple
             del self.cache[self.dll.head.value[0]]
-        #remove from head
+
+        #remove from linked list
             self.dll.remove_from_head()
+
         #decrease holding
             self.holding -=1
 
         
-        # key doesn't already exist, add it
+        # if key doesn't already exist, add key and value to the linked list
         self.dll.add_to_tail((key,value))
-        #add to dict
+
+        #add the key and value to the dict
         self.cache[key] = self.dll.tail
+
         #increase holding
         self.holding +=1
 
