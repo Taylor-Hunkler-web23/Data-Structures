@@ -34,7 +34,7 @@ class BinarySearchTree:
                 self.left.insert(value)
 
     #if the value being inserted is greater than the root value, we will go to the right
-        if value > self.value:
+        if value >= self.value:
 
     #if there is nothing to the right
             if self.right is None:
@@ -114,20 +114,74 @@ class BinarySearchTree:
 
     # DAY 2 Project -----------------------
 
+#     DFT Steps:
+# initialize a stack
+# push root to stack
+# while stack not empty
+# pop top item out of stack into temp
+# DO THE THING!!!!!!
+# if temp has right right put into stack
+# if temp has left left put into stack
+
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
+    #go as far left until hit end
+    #move right 
+    #go left
     def in_order_print(self, node):
-        pass
+        if self.left:
+            self.left.in_order_print(node)
+        if self.right:
+            self.right.in_order_print(node)
+        
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        # initialize a stack
+        queue = Queue()
+        # push root to stack
+        queue.enqueue(node)
+        # while stack is not empty
+        while queue.size > 0:
+        # pop top item out of stack into temp
+            temp = queue.dequeue()
+        # DO THE THING!!!!!!
+            print(temp)
+        # if temp has right right put into stack
+            if temp.right:
+                queue.enqueue(temp.right)
+        # if temp has right right put into stack
+            if temp.left:
+                queue.enqueue(temp.left)
+        
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # initialize a stack
+        stack = Stack()
+        # push root to stack
+        stack.push(node)
+        # while stack is not empty
+        while stack.len() > 0:
+        # pop top item out of stack into temp
+            temp = stack.pop()
+        # DO THE THING!!!!!!
+            print(temp)
+        # if temp has right, right put into stack
+            if temp.right:
+                stack.push(temp.right)
+        # if temp has left, left put into stack
+            if temp.left:
+                stack.push(temp.left)
+            
+
+
+
+
+
+        
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
