@@ -101,6 +101,7 @@ class BinarySearchTree:
     # Call the function `cb` on the value of each node
     # You may use a recursive or iterative approach
     def for_each(self, cb):
+        cb(self.value)
    
    #if there is something to the left
         if self.left:
