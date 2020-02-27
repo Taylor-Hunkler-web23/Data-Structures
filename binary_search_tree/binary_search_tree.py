@@ -130,9 +130,10 @@ class BinarySearchTree:
     #go left
     def in_order_print(self, node):
         if self.left:
-            self.left.in_order_print(node)
+            self.left.in_order_print(self.left)
+        print(self.value)
         if self.right:
-            self.right.in_order_print(node)
+            self.right.in_order_print(self.right)
         
 
     # Print the value of every node, starting with the given node,
@@ -147,7 +148,7 @@ class BinarySearchTree:
         # pop top item out of stack into temp
             temp = queue.dequeue()
         # DO THE THING!!!!!!
-            print(temp)
+            print(temp.value)
         # if temp has right right put into stack
             if temp.right:
                 queue.enqueue(temp.right)
@@ -168,7 +169,7 @@ class BinarySearchTree:
         # pop top item out of stack into temp
             temp = stack.pop()
         # DO THE THING!!!!!!
-            print(temp)
+            print(temp.value)
         # if temp has right, right put into stack
             if temp.right:
                 stack.push(temp.right)
